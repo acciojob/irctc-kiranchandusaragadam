@@ -53,8 +53,8 @@ public class TicketService {
             throw new Exception("Less tickets are available");
         }
 
-        String stations[]=train.getRoute().split(",");
-        List<Passenger>passengerList=new ArrayList<>();
+        String stations[] = train.getRoute().split(",");
+        List<Passenger>passengerList = new ArrayList<>();
 
         for(int id: bookTicketEntryDto.getPassengerIds()){
             passengerList.add(passengerRepository.findById(id).get());
@@ -63,16 +63,20 @@ public class TicketService {
         int sp = -1;
         int ep = -1;
 
-        for(int i=0; i< stations.length; i++){
-            if(bookTicketEntryDto.getFromStation().equals(stations[i])){
+        for(int i=0;i<stations.length;i++){
+            if(bookTicketEntryDto.getFromStation().toString().equals(stations[i])){
                 sp = i;
+                break;
             }
-            if(bookTicketEntryDto.getToStation().equals(stations[i])){
+        }
+        for(int i=0;i<stations.length;i++){
+            if(bookTicketEntryDto.getToStation().toString().equals(stations[i])){
                 ep = i;
+                break;
             }
         }
 
-        if(sp == -1|| ep == -1|| ep - sp < 0){
+        if(sp == -1 || ep == -1 || ep - sp < 0){
             throw new Exception("Invalid stations");
         }
 
